@@ -1,6 +1,23 @@
-# LojaVirtual
+# Desafio em Squad: Loja Virtual 
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
+Desenvolver um projeto utilizando os seguintes conceitos: componentes, databinding, serviços, consumo de API, rotas e formulários com validação.
+
+> Projeto desenvolvido durante o bootcamp da **WoMakersCode** 💜.
+
+## 🚀 Status do Projeto
+
+🚧 **Em andamento:** Estamos construindo a nossa loja virtual com muito código, café e colaboração! Volte em breve para conferir o resultado final.
+
+##  Squad Dorothy Vaughan
+
+Conheça as integrantes que fazem parte desta squad:
+
+* **Bruna Cruz** — [GitHub](https://github.com/brucarlota)
+* **Josiane Fatima** — [GitHub](https://github.com/JozySouza)
+* **Maria Luiza** — [GitHub](https://github.com/MaluWhoo)
+* **Nayara Francelino** — [GitHub](https://github.com/Nayara-fancelino)
+
+<!-- This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
 
 ## Development server
 
@@ -56,4 +73,4 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 
 ## Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page. -->
