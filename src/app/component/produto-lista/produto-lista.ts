@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ProdutoService } from '../../services/produto';
 import { CarrinhoService } from '../../services/carrinho';
-import { RouterLink } from '@angular/router';
 
 @Component({
   imports: [CommonModule, RouterLink],
@@ -33,5 +33,9 @@ export class ProdutoLista implements OnInit {
   adicionarAoCarrinho(produto: any) {
     this.carrinhoService.adicionarProduto(produto);
     console.log('Produto adicionado ao carrinho:', produto);
+  }
+
+  quantidadeCarrinho() {
+    return this.carrinhoService.quantidadeItens();
   }
 }

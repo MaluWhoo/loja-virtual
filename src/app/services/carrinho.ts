@@ -32,6 +32,10 @@ export class CarrinhoService {
     this.salvarCarrinho();
   }
 
+  quantidadeItens() {
+    return this.produtos.length;
+  }
+
   private salvarCarrinho() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(
