@@ -14,7 +14,11 @@
 </div>
 
 <div *ngIf="produtos.length > 0">
+
+  <h3>Total: $ {{ calcularTotal() | number:'1.2-2' }}</h3>
+
   <button (click)="limparCarrinho()">
     Limpar carrinho
   </button>
+
 </div>

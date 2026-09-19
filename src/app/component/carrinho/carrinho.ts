@@ -25,4 +25,11 @@ export class Carrinho {
     this.carrinhoService.limparCarrinho();
     this.produtos = this.carrinhoService.listarProdutos();
   }
+
+  calcularTotal() {
+    return this.produtos.reduce(
+      (total, produto) => total + produto.price,
+      0
+    );
+  }
 }
