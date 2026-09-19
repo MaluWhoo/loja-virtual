@@ -1,5 +1,11 @@
-<!-- <p>produto-lista works!</p> -->
+<h2>Produtos</h2>
+<a routerLink="/carrinho">Ver carrinho</a>
 
-<div class="produtos" *ngFor="let produto of produtos">
-    <p>Produto: {{produto.title}}</p>
+<div class="produtos" *ngFor="let produto of produtos()">
+  <p>Produto: {{ produto.title }}</p>
+  <p>Preço: $ {{ produto.price }}</p>
+
+  <button (click)="adicionarAoCarrinho(produto)">
+    Adicionar ao carrinho
+  </button>
 </div>
