@@ -1,0 +1,35 @@
+<main class="favorito-detalhe">
+	<a class="voltar" href="/">Voltar à lista principal</a>
+
+	@if (produto(); as produtoAtual) {
+		<section class="produto-resumo">
+			@if (produtoAtual.image) {
+				<img [src]="produtoAtual.image" [alt]="produtoAtual.title" />
+			}
+			<div>
+				<p class="eyebrow">Adicionar aos favoritos</p>
+				<h1>{{ produtoAtual.title }}</h1>
+				<p class="preco">{{ produtoAtual.price | currency:'BRL' }}</p>
+			</div>
+		</section>
+
+		<form [formGroup]="form" (ngSubmit)="favoritar()" novalidate>
+			<label for="motivo">Por que você gostou deste produto?</label>
+			<textarea
+				id="motivo"
+				formControlName="motivo"
+				rows="5"
+				placeholder="Ex.: Adorei a peça..."
+			></textarea>
+			@if (enviado && form.controls['motivo'].invalid) {
+				<small>Escreva pelo menos 10 caracteres.</small>
+			}
+			<button type="submit">Salvar favorito</button>
+			@if (salvo) {
+				<p class="sucesso" role="status">Favorito salvo com sucesso.</p>
+			}
+		</form>
+	} @else {
+		<p>Carregando produto...</p>
+	}
+</main>

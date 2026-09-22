@@ -1,0 +1,56 @@
+.favoritos-lista {
+	max-width: 760px;
+	margin: 0 auto;
+	padding: 32px 20px;
+}
+
+.cabecalho-wishlist {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.cabecalho-wishlist h1 {
+	margin: 0;
+}
+
+.voltar {
+	padding: 10px 16px;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+	color: #1f2937;
+	text-decoration: none;
+}
+
+.voltar:hover {
+	background: #f1f5f9;
+}
+
+article {
+	margin-top: 14px;
+	padding: 16px;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+}
+
+article h2,
+article p {
+	margin: 0 0 8px;
+}
+
+.prioridade {
+	font-size: 0.85rem;
+	font-weight: 600;
+}
+
+.prioridade-baixa { color: #166534; }
+.prioridade-média { color: #a16207; }
+.prioridade-alta { color: #b42318; }
+
+@media (max-width: 560px) {
+	.cabecalho-wishlist {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+}

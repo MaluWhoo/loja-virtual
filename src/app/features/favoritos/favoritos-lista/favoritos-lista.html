@@ -1,0 +1,27 @@
+<main class="favoritos-lista">
+	<header class="cabecalho-wishlist">
+		<h1>{{ mostrarTodos ? 'Todos os favoritos' : 'Minha lista de desejos' }}</h1>
+		<a class="voltar" href="/">Voltar à lista principal</a>
+	</header>
+
+	@if (favoritos.length === 0) {
+		<p>Nenhum favorito salvo ainda.</p>
+	} @else {
+		@for (favorito of favoritos; track $index) {
+			<article>
+				@if (favorito.produto) {
+					<h2>{{ favorito.produto.title }}</h2>
+					<p>{{ favorito.motivo }}</p>
+				} @else if (favorito.manual) {
+					<h2>{{ favorito.manual.nome }}</h2>
+					<p>{{ favorito.manual.descricao || 'Sem descrição.' }}</p>
+				}
+				@if (!mostrarTodos) {
+					<span class="prioridade prioridade-{{ favorito.prioridade || 'média' }}">
+						Prioridade: {{ favorito.prioridade || 'média' }}
+					</span>
+				}
+			</article>
+		}
+	}
+</main>

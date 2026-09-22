@@ -1,5 +1,85 @@
-<!-- <p>produto-lista works!</p> -->
+<section class="catalogo">
+    <header class="catalogo-cabecalho">
+        <div>
+            <p class="eyebrow">Catálogo</p>
+            <h1>Produtos</h1>
+        </div>
 
-<div class="produtos" *ngFor="let produto of produtos">
-    <p>Produto: {{produto.title}}</p>
-</div>
+        <div class="catalogo-acoes">
+            <a class="wishlist" href="/favoritos">Wishlist</a>
+            <a class="favoritos-menu" href="/favoritos/todos">Favoritos</a>
+            <label for="categoria">Filtrar por categoria</label>
+            <select id="categoria" [(ngModel)]="categoriaSelecionada">
+                <option value="">Todas as categorias</option>
+                <option *ngFor="let categoria of categorias" [value]="categoria">
+                    {{ categoria }}
+                </option>
+            </select>
+        </div>
+    </header>
+
+    @if (carregando()) {
+        <p class="resultado">Carregando produtos...</p>
+    } @else if (erro()) {
+        <p class="erro">Não foi possível carregar os produtos. Atualize a página e tente novamente.</p>
+    } @else {
+        <p class="resultado">
+            {{ produtosFiltrados.length }} produto(s) encontrado(s)
+        </p>
+    }
+
+    <div class="grade-produtos" *ngIf="!carregando() && !erro()">
+        <article class="produto-card" *ngFor="let produto of produtosFiltrados">
+            <div class="produto-imagem">
+                <img [src]="produto.image" [alt]="produto.title" />
+            </div>
+            <div class="produto-conteudo">
+                <p class="categoria">{{ produto.category }}</p>
+                <h2>{{ produto.title }}</h2>
+                <p class="preco">{{ produto.price | currency:'BRL' }}</p>
+                <label class="prioridade-label" [for]="'prioridade-' + produto.id">
+                    Prioridade
+                    <select
+                        [id]="'prioridade-' + produto.id"
+                        [ngModel]="obterPrioridade(produto.id)"
+                        (ngModelChange)="definirPrioridade(produto.id, $event)"
+                        [disabled]="foiWishlist(produto.id)"
+                    >
+                        <option *ngFor="let prioridade of prioridades" [value]="prioridade">
+                            {{ prioridade }}
+                        </option>
+                    </select>
+                </label>
+                <div class="produto-acoes">
+                    <button
+                        class="favoritar"
+                        type="button"
+                        (click)="alternarWishlist(produto)"
+                        [attr.aria-label]="(foiWishlist(produto.id) ? 'Remover ' : 'Adicionar ') + produto.title + ' ' + (foiWishlist(produto.id) ? 'da' : 'à') + ' wishlist'"
+                    >
+                        {{ foiWishlist(produto.id) ? 'Remover da wishlist' : 'Wishlist' }}
+                    </button>
+                    @if (foiFavorito(produto.id)) {
+                        <button
+                            class="favorito-detalhe favorito-adicionado"
+                            type="button"
+                            (click)="removerFavorito(produto)"
+                            [attr.aria-label]="'Retirar ' + produto.title + ' dos favoritos'"
+                        >
+                            Retirar dos favoritos
+                        </button>
+                    } @else {
+                        <button
+                            class="favorito-detalhe"
+                            type="button"
+                            (click)="abrirFormularioFavorito(produto)"
+                            [attr.aria-label]="'Adicionar ' + produto.title + ' aos favoritos'"
+                        >
+                            Favorito
+                        </button>
+                    }
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
