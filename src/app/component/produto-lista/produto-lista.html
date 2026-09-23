@@ -18,7 +18,12 @@
 
 @if (reposicaoEnviada) {
     <div class="msg-confirmacao">
-        <p>Estoque enviado!</p>
-        <p>Foi adicionado ao produto </p>
+        <p>Estoque enviado! Foi adicionado ao produto.</p> 
+    </div>
+} 
+
+@if (formItem.get('id')?.hasError('idNaoEncontrado')){
+    <div class="mgs-erro">
+        <p>Este ID não está cadastrado.</p>
     </div>
 }

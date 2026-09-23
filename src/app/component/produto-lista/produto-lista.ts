@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ProdutoService } from '../../services/produto';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
   imports: [CommonModule, ReactiveFormsModule],
@@ -23,25 +23,43 @@ export class ProdutoLista implements OnInit {
 
   ngOnInit(): void {
     this.ProdutoService.listarProdutos().subscribe({
-      next: (data) => this.produtos = data,
+      next: (data) => {
+        this.produtos = data,
+          this.formItem.get('id')?.addValidators(this.validarId.bind(this));
+        this.formItem.get('id')?.updateValueAndValidity();
+      },
       error: (error) => console.error('Erro:', error),
     });
   }
 
+  validarId(control: AbstractControl): ValidationErrors | null {
+    const idDigitado = Number(control.value);
+    if (!idDigitado) return null;
+
+    const existe = this.produtos.some(i => i.id === idDigitado);
+    return existe ? null : { idNaoEncontrado: true };
+  }
+
   enviar() {
     if (this.formItem.valid) {
-      this.ProdutoService.adicionarEstoque(
-        this.formItem.value.id!,
-        this.formItem.value.quantidade!
-      );
+      const id = this.formItem.value.id!;
+      const quantidade = this.formItem.value.quantidade!;
 
+      this.ProdutoService.adicionarEstoque(id, quantidade);
       this.reposicaoEnviada = true;
-      console.log(`Adicionadas ${this.formItem.value.quantidade} unidades ao produto ${this.formItem.value.id}`);
+      console.log(`Adicionadas ${quantidade} unidades ao produto ${id}`);
 
       this.formItem.reset({
         id: null,
         quantidade: 1,
       });
+
+      setTimeout(() => {
+        this.reposicaoEnviada = false;
+      }, 4000);
+
+    } else {
+      console.log('ID inválido ou produto não existe na base de dados.');
     }
   }
 }
