@@ -31,3 +31,15 @@ export const routes: Routes = [
 
 
 
+import { Carrinho } from './component/carrinho/carrinho';
+
+export const routes: Routes = [
+  {
+    path: '',
+    component: ProdutoLista
+  },
+  {
+    path: 'carrinho',
+    component: Carrinho
+  }
+];
