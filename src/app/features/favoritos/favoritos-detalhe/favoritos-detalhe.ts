@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProdutoService } from '../../../services/produto';
 import { FavoritosService } from '../../../services/favoritos';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -29,10 +29,11 @@ export class FavoritosDetalheComponent implements OnInit {
     private route: ActivatedRoute,
     private produtoService: ProdutoService,
     private favoritosService: FavoritosService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.form = this.fb.group({
-      motivo: ['', [Validators.required, Validators.minLength(10)]]
+      motivo: ['', [Validators.required, Validators.minLength(5)]]
     });
   }
 
@@ -52,6 +53,13 @@ export class FavoritosDetalheComponent implements OnInit {
         price: 0
       });
 
+      const favoritos = this.favoritosService.listar();
+      const favorito = favoritos.find((item) => item.produto?.id === Number(id));
+
+      if (favorito?.interesse) {
+        this.form.patchValue({ motivo: favorito.observacao || '' });
+      }
+
       this.produtoService.getById(id).subscribe({
         next: (produto: Produto) => this.produto.set(produto),
         error: () => undefined
@@ -66,5 +74,9 @@ export class FavoritosDetalheComponent implements OnInit {
       this.favoritosService.adicionarFavorito(produto, this.form.value.motivo);
       this.salvo = true;
     }
+  }
+
+  voltarParaInicio(): void {
+    this.router.navigate(['/']);
   }
 }

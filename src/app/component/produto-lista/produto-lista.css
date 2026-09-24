@@ -18,11 +18,15 @@
 	gap: 16px;
 }
 
+.voltar-inicio,
 .wishlist {
 	padding: 10px 16px;
+	border: 0;
 	border-radius: 6px;
 	background: #1f2937;
 	color: #fff;
+	cursor: pointer;
+	font: inherit;
 	text-decoration: none;
 }
 
@@ -136,6 +140,37 @@ select {
 	width: 100%;
 	padding: 8px 10px;
 	font-size: 0.9rem;
+}
+
+.interesse-label,
+.observacao-label {
+	display: grid;
+	gap: 6px;
+	font-size: 0.85rem;
+	font-weight: 600;
+}
+
+.interesse-checkbox {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: #1f2937;
+}
+
+.interesse-checkbox input {
+	width: 16px;
+	height: 16px;
+	margin: 0;
+}
+
+.observacao-label textarea {
+	width: 100%;
+	min-height: 80px;
+	padding: 10px 12px;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+	resize: vertical;
+	font: inherit;
 }
 
 .favoritar {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Favorito, FavoritosService, Prioridade } from '../../../services/favoritos';
 
 @Component({
@@ -19,7 +19,8 @@ export class FavoritosLista {
 
   constructor(
     private favoritosService: FavoritosService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,5 +38,9 @@ export class FavoritosLista {
 
   valorPrioridade(favorito: Favorito): number {
     return this.ordemPrioridade[favorito.prioridade] ?? this.ordemPrioridade.média;
+  }
+
+  voltarParaInicio(): void {
+    this.router.navigate(['/']);
   }
 }

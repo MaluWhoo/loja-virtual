@@ -19,6 +19,8 @@ export type Favorito = {
   prioridade: Prioridade;
   wishlist?: boolean;
   favorito?: boolean;
+  interesse?: boolean;
+  observacao?: string;
 };
 
 @Injectable({ providedIn: 'root' })
@@ -46,6 +48,13 @@ export class FavoritosService {
 
   removerWishlist(produtoId: number): void {
     this.atualizarMarcacao(produtoId, 'wishlist');
+  }
+
+  salvarInteresse(produto: Produto, interesse: boolean, observacao = ''): void {
+    this.atualizarProduto(produto, {
+      interesse,
+      observacao: interesse ? observacao : ''
+    });
   }
 
   private atualizarProduto(

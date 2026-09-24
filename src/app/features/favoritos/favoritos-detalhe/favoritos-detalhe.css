@@ -5,17 +5,22 @@
 }
 
 .voltar {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	margin-bottom: 24px;
 	padding: 10px 16px;
-	border: 1px solid #cbd5e1;
+	border: 0;
 	border-radius: 6px;
-	color: #1f2937;
+	background: #1f2937;
+	color: #fff;
+	cursor: pointer;
+	font: inherit;
 	text-decoration: none;
 }
 
 .voltar:hover {
-	background: #f1f5f9;
+	background: #111827;
 }
 
 .produto-resumo {

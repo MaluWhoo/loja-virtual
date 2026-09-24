@@ -1,20 +1,37 @@
 <main class="favoritos-lista">
 	<header class="cabecalho-wishlist">
 		<h1>{{ mostrarTodos ? 'Todos os favoritos' : 'Minha lista de desejos' }}</h1>
-		<a class="voltar" href="/">Voltar à lista principal</a>
+		<div class="acoes-header">
+			<button class="voltar" type="button" (click)="voltarParaInicio()" aria-label="Voltar para a página inicial">
+				← Página inicial
+			</button>
+		</div>
 	</header>
 
 	@if (favoritos.length === 0) {
 		<p>Nenhum favorito salvo ainda.</p>
 	} @else {
 		@for (favorito of favoritos; track $index) {
-			<article>
+			<article class="produto-item">
 				@if (favorito.produto) {
-					<h2>{{ favorito.produto.title }}</h2>
-					<p>{{ favorito.motivo }}</p>
+					<div class="produto-imagem">
+						<img [src]="favorito.produto.image" [alt]="favorito.produto.title" />
+					</div>
+					<div class="produto-detalhes">
+						<h2>{{ favorito.produto.title }}</h2>
+						<p>{{ favorito.motivo }}</p>
+						@if (favorito.interesse) {
+							<p class="status-interesse">Tenho interesse</p>
+							@if (favorito.observacao) {
+								<p class="observacao-salva">Observação: {{ favorito.observacao }}</p>
+							}
+						}
+					</div>
 				} @else if (favorito.manual) {
-					<h2>{{ favorito.manual.nome }}</h2>
-					<p>{{ favorito.manual.descricao || 'Sem descrição.' }}</p>
+					<div class="produto-detalhes">
+						<h2>{{ favorito.manual.nome }}</h2>
+						<p>{{ favorito.manual.descricao || 'Sem descrição.' }}</p>
+					</div>
 				}
 				@if (!mostrarTodos) {
 					<span class="prioridade prioridade-{{ favorito.prioridade || 'média' }}">

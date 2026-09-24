@@ -18,6 +18,10 @@ export const routes: Routes = [
     component: FavoritosLista
   },
   {
+    path: 'categoria/:categoria',
+    component: ProdutoLista
+  },
+  {
     path: '',
     component: ProdutoLista,
     pathMatch: 'full'

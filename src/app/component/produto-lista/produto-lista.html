@@ -2,14 +2,23 @@
     <header class="catalogo-cabecalho">
         <div>
             <p class="eyebrow">Catálogo</p>
-            <h1>Produtos</h1>
+            <h1>{{ tituloPagina }}</h1>
         </div>
 
         <div class="catalogo-acoes">
+            @if (categoriaSelecionada) {
+                <button class="voltar-inicio" type="button" (click)="voltarParaInicio()" aria-label="Voltar para a página inicial">
+                    ← Página inicial
+                </button>
+            }
             <a class="wishlist" href="/favoritos">Wishlist</a>
             <a class="favoritos-menu" href="/favoritos/todos">Favoritos</a>
             <label for="categoria">Filtrar por categoria</label>
-            <select id="categoria" [(ngModel)]="categoriaSelecionada">
+            <select
+                id="categoria"
+                [ngModel]="categoriaSelecionada"
+                (ngModelChange)="alterarCategoria($event)"
+            >
                 <option value="">Todas as categorias</option>
                 <option *ngFor="let categoria of categorias" [value]="categoria">
                     {{ categoria }}
@@ -50,6 +59,35 @@
                         </option>
                     </select>
                 </label>
+
+                @if (categoriaSelecionada) {
+                    <label class="interesse-label">
+                        <span class="interesse-checkbox">
+                            <input
+                                type="checkbox"
+                                [name]="'interesse-' + produto.id"
+                                [checked]="temInteresse(produto.id)"
+                                (change)="alternarInteresse(produto.id, $any($event.target).checked)"
+                            />
+                            <span>Tenho interesse</span>
+                        </span>
+                    </label>
+
+                    @if (temInteresse(produto.id)) {
+                        <label class="observacao-label" [for]="'observacao-' + produto.id">
+                            Observação
+                            <textarea
+                                [id]="'observacao-' + produto.id"
+                                [name]="'observacao-' + produto.id"
+                                rows="3"
+                                [ngModel]="observacoesInteresse[produto.id] || ''"
+                                (ngModelChange)="atualizarObservacaoInteresse(produto.id, $event)"
+                                placeholder="Descreva o que você gostaria de observar"
+                            ></textarea>
+                        </label>
+                    }
+                }
+
                 <div class="produto-acoes">
                     <button
                         class="favoritar"

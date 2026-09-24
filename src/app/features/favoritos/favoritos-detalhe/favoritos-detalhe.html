@@ -1,5 +1,7 @@
 <main class="favorito-detalhe">
-	<a class="voltar" href="/">Voltar à lista principal</a>
+	<button class="voltar" type="button" (click)="voltarParaInicio()" aria-label="Voltar para a página inicial">
+		← Página inicial
+	</button>
 
 	@if (produto(); as produtoAtual) {
 		<section class="produto-resumo">
@@ -18,11 +20,11 @@
 			<textarea
 				id="motivo"
 				formControlName="motivo"
-				rows="5"
+				rows="2"
 				placeholder="Ex.: Adorei a peça..."
 			></textarea>
 			@if (enviado && form.controls['motivo'].invalid) {
-				<small>Escreva pelo menos 10 caracteres.</small>
+				<small>Escreva pelo menos 5 caracteres.</small>
 			}
 			<button type="submit">Salvar favorito</button>
 			@if (salvo) {
