@@ -79,10 +79,10 @@
                             <textarea
                                 [id]="'observacao-' + produto.id"
                                 [name]="'observacao-' + produto.id"
-                                rows="3"
+                                rows="1"
                                 [ngModel]="observacoesInteresse[produto.id] || ''"
                                 (ngModelChange)="atualizarObservacaoInteresse(produto.id, $event)"
-                                placeholder="Descreva o que você gostaria de observar"
+                                placeholder="fale mais sobre seu interesse..."
                             ></textarea>
                         </label>
                     }
