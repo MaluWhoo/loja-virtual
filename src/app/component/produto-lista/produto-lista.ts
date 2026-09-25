@@ -1,30 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProdutoService } from '../../services/produto';
 import { FavoritosService, Prioridade } from '../../services/favoritos';
-
-@Component({
-  imports: [CommonModule, FormsModule],
-import { RouterLink } from '@angular/router';
-import { ProdutoService } from '../../services/produto';
 import { CarrinhoService } from '../../services/carrinho';
 
 @Component({
-  imports: [CommonModule, RouterLink],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink],
   selector: 'app-produto-lista',
   styleUrl: './produto-lista.css',
   templateUrl: './produto-lista.html',
 })
 export class ProdutoLista implements OnInit {
-  constructor(
-    private produtoService: ProdutoService,
-    private favoritosService: FavoritosService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
-
   private readonly chaveInteresse = 'loja-virtual-interesse';
   private readonly chaveObservacao = 'loja-virtual-observacoes';
 
@@ -44,6 +33,14 @@ export class ProdutoLista implements OnInit {
     "men's clothing",
     "women's clothing"
   ];
+
+  constructor(
+    private produtoService: ProdutoService,
+    private favoritosService: FavoritosService,
+    private carrinhoService: CarrinhoService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   get tituloPagina(): string {
     return this.categoriaSelecionada
@@ -67,45 +64,30 @@ export class ProdutoLista implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const categoriaParam = params.get('categoria');
       this.categoriaSelecionada = categoriaParam ? decodeURIComponent(categoriaParam) : '';
-  produtos = signal<any[]>([]);
 
-  constructor(
-    public ProdutoService: ProdutoService,
-    private carrinhoService: CarrinhoService
-  ) {}
+      const favoritos = this.favoritosService.listar().filter((favorito) => favorito.produto);
+      this.wishlistIds.set(
+        favoritos
+          .filter((favorito) => favorito.wishlist === true || favorito.wishlist === undefined)
+          .map((favorito) => favorito.produto!.id)
+      );
+      this.favoritoIds.set(
+        favoritos
+          .filter((favorito) => favorito.favorito === true || favorito.favorito === undefined)
+          .map((favorito) => favorito.produto!.id)
+      );
 
-  ngOnInit(): void {
-    this.ProdutoService.listarProdutor().subscribe({
-      next: (data) => {
-        this.produtos.set(data);
-      },
-      error: (error) => {
-        console.error('Erro ao carregar produtos:', error);
-      },
-    });
-
-    const favoritos = this.favoritosService.listar().filter((favorito) => favorito.produto);
-    this.wishlistIds.set(
-      favoritos
-        .filter((favorito) => favorito.wishlist === true || favorito.wishlist === undefined)
-        .map((favorito) => favorito.produto!.id)
-    );
-    this.favoritoIds.set(
-      favoritos
-        .filter((favorito) => favorito.favorito === true || favorito.favorito === undefined)
-        .map((favorito) => favorito.produto!.id)
-    );
-
-    this.produtoService.listarProdutor().subscribe({
-      next: (data) => {
-        this.produtos.set(Array.isArray(data) ? data : []);
-        this.carregando.set(false);
-      },
-      error: (error) => {
-        console.error('Erro ao carregar produtos:', error);
-        this.carregando.set(false);
-        this.erro.set(true);
-      },
+      this.produtoService.listarProdutor().subscribe({
+        next: (data) => {
+          this.produtos.set(Array.isArray(data) ? data : []);
+          this.carregando.set(false);
+        },
+        error: (error) => {
+          console.error('Erro ao carregar produtos:', error);
+          this.carregando.set(false);
+          this.erro.set(true);
+        },
+      });
     });
   }
 
@@ -134,6 +116,17 @@ export class ProdutoLista implements OnInit {
   removerFavorito(produto: any): void {
     this.favoritosService.removerFavorito(produto.id);
     this.favoritoIds.update((ids) => ids.filter((id) => id !== produto.id));
+  }
+
+  alternarFavorito(produto: any): void {
+    if (this.foiFavorito(produto.id)) {
+      this.removerFavorito(produto);
+      return;
+    }
+
+    this.favoritosService.adicionarFavorito(produto, 'Adicionado pelo catálogo');
+    this.favoritoIds.update((ids) => [...new Set([...ids, produto.id])]);
+    this.router.navigate(['/favoritos', produto.id]);
   }
 
   abrirFormularioFavorito(produto: any): void {
@@ -225,12 +218,11 @@ export class ProdutoLista implements OnInit {
     }
   }
 
-  adicionarAoCarrinho(produto: any) {
+  adicionarAoCarrinho(produto: any): void {
     this.carrinhoService.adicionarProduto(produto);
-    console.log('Produto adicionado ao carrinho:', produto);
   }
 
-  quantidadeCarrinho() {
+  quantidadeCarrinho(): number {
     return this.carrinhoService.quantidadeItens();
   }
 }

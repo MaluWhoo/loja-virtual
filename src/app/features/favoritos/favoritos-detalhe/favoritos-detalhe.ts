@@ -1,5 +1,5 @@
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProdutoService } from '../../../services/produto';
@@ -14,7 +14,8 @@ type Produto = {
 };
 
 @Component({
-  imports: [CurrencyPipe, ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, CurrencyPipe, ReactiveFormsModule],
   selector: 'app-favoritos-detalhe',
   styleUrl: './favoritos-detalhe.css',
   templateUrl: './favoritos-detalhe.html',

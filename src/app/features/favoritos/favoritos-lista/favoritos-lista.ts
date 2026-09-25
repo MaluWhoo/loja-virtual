@@ -1,9 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Favorito, FavoritosService, Prioridade } from '../../../services/favoritos';
 
 @Component({
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   selector: 'app-favoritos-lista',
   styleUrl: './favoritos-lista.css',
   templateUrl: './favoritos-lista.html',

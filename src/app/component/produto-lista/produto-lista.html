@@ -50,6 +50,11 @@
                 <p class="categoria">{{ produto.category }}</p>
                 <h2>{{ produto.title }}</h2>
                 <p class="preco">{{ produto.price | currency:'BRL' }}</p>
+
+                <a class="ver-carrinho" routerLink="/carrinho">
+                    Ver carrinho ({{ quantidadeCarrinho() }})
+                </a>
+
                 <label class="prioridade-label" [for]="'prioridade-' + produto.id">
                     Prioridade
                     <select
@@ -115,27 +120,22 @@
                         <button
                             class="favorito-detalhe"
                             type="button"
-                            (click)="abrirFormularioFavorito(produto)"
+                            (click)="alternarFavorito(produto)"
                             [attr.aria-label]="'Adicionar ' + produto.title + ' aos favoritos'"
                         >
                             Favorito
                         </button>
                     </ng-template>
                 </div>
+
+                <button
+                    class="adicionar-carrinho"
+                    type="button"
+                    (click)="adicionarAoCarrinho(produto)"
+                >
+                    Adicionar ao carrinho
+                </button>
             </div>
         </article>
     </div>
 </section>
-<h2>Produtos</h2>
-<a routerLink="/carrinho">
-  Ver carrinho ({{ quantidadeCarrinho() }})
-</a>
-
-<div class="produtos" *ngFor="let produto of produtos()">
-  <p>Produto: {{ produto.title }}</p>
-  <p>Preço: $ {{ produto.price }}</p>
-
-  <button (click)="adicionarAoCarrinho(produto)">
-    Adicionar ao carrinho
-  </button>
-</div>
