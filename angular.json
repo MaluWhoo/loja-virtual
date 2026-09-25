@@ -31,7 +31,12 @@
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": []
+              "allowedHosts": [
+                "localhost",
+                "127.0.0.1",
+                "0.0.0.0",
+                "10.90.1.217"
+              ]
             },
             "ssr": {
               "entry": "src/server.ts"
@@ -63,6 +68,14 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "allowedHosts": [
+              "localhost",
+              "127.0.0.1",
+              "0.0.0.0",
+              "10.90.1.217"
+            ]
+          },
           "configurations": {
             "production": {
               "buildTarget": "loja-virtual:build:production"

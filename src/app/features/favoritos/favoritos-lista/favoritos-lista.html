@@ -1,0 +1,41 @@
+<main class="favoritos-lista">
+	<header class="cabecalho-wishlist">
+		<h1>{{ mostrarTodos ? 'Todos os favoritos' : 'Minha lista de desejos' }}</h1>
+		<div class="acoes-header">
+			<button class="voltar" type="button" (click)="voltarParaInicio()" aria-label="Voltar para a página inicial">
+				← Página inicial
+			</button>
+		</div>
+	</header>
+
+	<ng-container *ngIf="favoritos.length === 0; else listaFavoritos">
+		<p>Nenhum favorito salvo ainda.</p>
+	</ng-container>
+
+	<ng-template #listaFavoritos>
+		<article class="produto-item" *ngFor="let favorito of favoritos; let i = index">
+			<ng-container *ngIf="favorito.produto; else favoritoManual">
+				<div class="produto-imagem">
+					<img [src]="favorito.produto.image" [alt]="favorito.produto.title" />
+				</div>
+				<div class="produto-detalhes">
+					<h2>{{ favorito.produto.title }}</h2>
+					<p>{{ favorito.motivo }}</p>
+					<p *ngIf="favorito.interesse" class="status-interesse">Tenho interesse</p>
+					<p *ngIf="favorito.interesse && favorito.observacao" class="observacao-salva">Observação: {{ favorito.observacao }}</p>
+				</div>
+			</ng-container>
+
+			<ng-template #favoritoManual>
+				<div class="produto-detalhes" *ngIf="favorito.manual">
+					<h2>{{ favorito.manual.nome }}</h2>
+					<p>{{ favorito.manual.descricao || 'Sem descrição.' }}</p>
+				</div>
+			</ng-template>
+
+			<span *ngIf="!mostrarTodos" class="prioridade prioridade-{{ favorito.prioridade || 'média' }}">
+				Prioridade: {{ favorito.prioridade || 'média' }}
+			</span>
+		</article>
+	</ng-template>
+</main>
