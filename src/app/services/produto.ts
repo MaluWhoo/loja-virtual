@@ -9,7 +9,11 @@ export class ProdutoService {
     // Abrindo a porta o HttpClient
     constructor(private http: HttpClient) {}
 
-    listarProdutor() {
+    listarProdutos() {
         return this.http.get<any>('https://fakestoreapi.com/products');
     }
+
+	listarProdutoPorId(id: number) {
+        return this.http.get<any>(`https://fakestoreapi.com/products/${id}`);
+	}
 }

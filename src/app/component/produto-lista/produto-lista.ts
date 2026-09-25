@@ -15,7 +15,7 @@ export class ProdutoLista implements OnInit {
   produtos: any[] = [];
 
   ngOnInit(): void {
-    this.ProdutoService.listarProdutor().subscribe({
+    this.ProdutoService.listarProdutos().subscribe({
       next: (data) => this.produtos = data,
       error: (error) => console.error('Erro:', error),
     });
