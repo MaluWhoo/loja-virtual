@@ -1,23 +1,41 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ProdutoService } from '../../services/produto';
+import { CarrinhoService } from '../../services/carrinho';
 
 @Component({
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   selector: 'app-produto-lista',
   styleUrl: './produto-lista.css',
   templateUrl: './produto-lista.html',
 })
 export class ProdutoLista implements OnInit {
 
-  constructor(public ProdutoService: ProdutoService) {}
+  produtos = signal<any[]>([]);
 
-  produtos: any[] = [];
+  constructor(
+    public ProdutoService: ProdutoService,
+    private carrinhoService: CarrinhoService
+  ) {}
 
   ngOnInit(): void {
     this.ProdutoService.listarProdutos().subscribe({
-      next: (data) => this.produtos = data,
-      error: (error) => console.error('Erro:', error),
+      next: (data) => {
+        this.produtos.set(data);
+      },
+      error: (error) => {
+        console.error('Erro ao carregar produtos:', error);
+      },
     });
+  }
+
+  adicionarAoCarrinho(produto: any) {
+    this.carrinhoService.adicionarProduto(produto);
+    console.log('Produto adicionado ao carrinho:', produto);
+  }
+
+  quantidadeCarrinho() {
+    return this.carrinhoService.quantidadeItens();
   }
 }
