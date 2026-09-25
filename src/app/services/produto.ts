@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
     providedIn: 'root'
@@ -7,7 +8,9 @@ import { Injectable } from '@angular/core';
 export class ProdutoService {
 
     // Abrindo a porta o HttpClient
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient,) { }
+
+    private platformId = inject(PLATFORM_ID);
 
     private chaveEstoque = 'estoque';
     produtos: any[] = [];
@@ -21,10 +24,12 @@ export class ProdutoService {
     }
 
     obterEstoque(): { [id: number]: number } {
-        const estoque = localStorage.getItem(this.chaveEstoque);
+        if (isPlatformBrowser(this.platformId)) {
+            const estoque = localStorage.getItem(this.chaveEstoque);
 
-        if (estoque) {
-            return JSON.parse(estoque);
+            if (estoque) {
+                return JSON.parse(estoque);
+            }
         }
 
         return {};
@@ -38,11 +43,13 @@ export class ProdutoService {
     adicionarEstoque(id: number, quantidade: number): void {
         const estoque = this.obterEstoque();
 
-        estoque[id] = (estoque[id] ?? 0) + quantidade;
+        if (isPlatformBrowser(this.platformId)) {
+            estoque[id] = (estoque[id] ?? 0) + quantidade;
 
-        localStorage.setItem(
-            this.chaveEstoque,
-            JSON.stringify(estoque)
-        );
+            localStorage.setItem(
+                this.chaveEstoque,
+                JSON.stringify(estoque)
+            );
+        }
     }
 }
