@@ -20,7 +20,7 @@ export class ProdutoLista implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.ProdutoService.listarProdutor().subscribe({
+    this.ProdutoService.listarProdutos().subscribe({
       next: (data) => {
         this.produtos.set(data);
       },
