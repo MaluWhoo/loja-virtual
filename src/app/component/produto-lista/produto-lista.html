@@ -126,3 +126,16 @@
         </article>
     </div>
 </section>
+<h2>Produtos</h2>
+<a routerLink="/carrinho">
+  Ver carrinho ({{ quantidadeCarrinho() }})
+</a>
+
+<div class="produtos" *ngFor="let produto of produtos()">
+  <p>Produto: {{ produto.title }}</p>
+  <p>Preço: $ {{ produto.price }}</p>
+
+  <button (click)="adicionarAoCarrinho(produto)">
+    Adicionar ao carrinho
+  </button>
+</div>

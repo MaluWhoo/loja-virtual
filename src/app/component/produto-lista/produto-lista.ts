@@ -7,6 +7,12 @@ import { FavoritosService, Prioridade } from '../../services/favoritos';
 
 @Component({
   imports: [CommonModule, FormsModule],
+import { RouterLink } from '@angular/router';
+import { ProdutoService } from '../../services/produto';
+import { CarrinhoService } from '../../services/carrinho';
+
+@Component({
+  imports: [CommonModule, RouterLink],
   selector: 'app-produto-lista',
   styleUrl: './produto-lista.css',
   templateUrl: './produto-lista.html',
@@ -61,6 +67,21 @@ export class ProdutoLista implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const categoriaParam = params.get('categoria');
       this.categoriaSelecionada = categoriaParam ? decodeURIComponent(categoriaParam) : '';
+  produtos = signal<any[]>([]);
+
+  constructor(
+    public ProdutoService: ProdutoService,
+    private carrinhoService: CarrinhoService
+  ) {}
+
+  ngOnInit(): void {
+    this.ProdutoService.listarProdutor().subscribe({
+      next: (data) => {
+        this.produtos.set(data);
+      },
+      error: (error) => {
+        console.error('Erro ao carregar produtos:', error);
+      },
     });
 
     const favoritos = this.favoritosService.listar().filter((favorito) => favorito.produto);
@@ -202,5 +223,14 @@ export class ProdutoLista implements OnInit {
     } catch {
       return;
     }
+  }
+
+  adicionarAoCarrinho(produto: any) {
+    this.carrinhoService.adicionarProduto(produto);
+    console.log('Produto adicionado ao carrinho:', produto);
+  }
+
+  quantidadeCarrinho() {
+    return this.carrinhoService.quantidadeItens();
   }
 }

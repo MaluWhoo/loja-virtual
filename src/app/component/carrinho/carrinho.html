@@ -1,0 +1,24 @@
+<h2>Meu Carrinho</h2>
+
+<div *ngIf="produtos.length === 0">
+  <p>Seu carrinho está vazio.</p>
+</div>
+
+<div *ngFor="let produto of produtos; let i = index">
+  <p>{{ produto.title }}</p>
+  <p>Preço: $ {{ produto.price }}</p>
+
+  <button (click)="removerProduto(i)">
+    Remover
+  </button>
+</div>
+
+<div *ngIf="produtos.length > 0">
+
+  <h3>Total: $ {{ calcularTotal() | number:'1.2-2' }}</h3>
+
+  <button (click)="limparCarrinho()">
+    Limpar carrinho
+  </button>
+
+</div>
