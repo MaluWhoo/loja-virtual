@@ -3,11 +3,9 @@
 		← Página inicial
 	</button>
 
-	@if (produto(); as produtoAtual) {
+	<ng-container *ngIf="produto() as produtoAtual; else carregandoProduto">
 		<section class="produto-resumo">
-			@if (produtoAtual.image) {
-				<img [src]="produtoAtual.image" [alt]="produtoAtual.title" />
-			}
+			<img *ngIf="produtoAtual.image" [src]="produtoAtual.image" [alt]="produtoAtual.title" />
 			<div>
 				<p class="eyebrow">Adicionar aos favoritos</p>
 				<h1>{{ produtoAtual.title }}</h1>
@@ -23,15 +21,13 @@
 				rows="2"
 				placeholder="Ex.: Adorei a peça..."
 			></textarea>
-			@if (enviado && form.controls['motivo'].invalid) {
-				<small>Escreva pelo menos 5 caracteres.</small>
-			}
+			<small *ngIf="enviado && form.controls['motivo'].invalid">Escreva pelo menos 5 caracteres.</small>
 			<button type="submit">Salvar favorito</button>
-			@if (salvo) {
-				<p class="sucesso" role="status">Favorito salvo com sucesso.</p>
-			}
+			<p *ngIf="salvo" class="sucesso" role="status">Favorito salvo com sucesso.</p>
 		</form>
-	} @else {
+	</ng-container>
+
+	<ng-template #carregandoProduto>
 		<p>Carregando produto...</p>
-	}
+	</ng-template>
 </main>

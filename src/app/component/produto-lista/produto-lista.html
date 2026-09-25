@@ -6,11 +6,11 @@
         </div>
 
         <div class="catalogo-acoes">
-            @if (categoriaSelecionada) {
+            <ng-container *ngIf="categoriaSelecionada">
                 <button class="voltar-inicio" type="button" (click)="voltarParaInicio()" aria-label="Voltar para a página inicial">
                     ← Página inicial
                 </button>
-            }
+            </ng-container>
             <a class="wishlist" href="/favoritos">Wishlist</a>
             <a class="favoritos-menu" href="/favoritos/todos">Favoritos</a>
             <label for="categoria">Filtrar por categoria</label>
@@ -27,15 +27,19 @@
         </div>
     </header>
 
-    @if (carregando()) {
+    <ng-container *ngIf="carregando(); else resultadoTemplate">
         <p class="resultado">Carregando produtos...</p>
-    } @else if (erro()) {
-        <p class="erro">Não foi possível carregar os produtos. Atualize a página e tente novamente.</p>
-    } @else {
-        <p class="resultado">
-            {{ produtosFiltrados.length }} produto(s) encontrado(s)
-        </p>
-    }
+    </ng-container>
+
+    <ng-template #resultadoTemplate>
+        <p *ngIf="erro(); else produtosOk" class="erro">Não foi possível carregar os produtos. Atualize a página e tente novamente.</p>
+
+        <ng-template #produtosOk>
+            <p class="resultado">
+                {{ produtosFiltrados.length }} produto(s) encontrado(s)
+            </p>
+        </ng-template>
+    </ng-template>
 
     <div class="grade-produtos" *ngIf="!carregando() && !erro()">
         <article class="produto-card" *ngFor="let produto of produtosFiltrados">
@@ -60,7 +64,7 @@
                     </select>
                 </label>
 
-                @if (categoriaSelecionada) {
+                <ng-container *ngIf="categoriaSelecionada">
                     <label class="interesse-label">
                         <span class="interesse-checkbox">
                             <input
@@ -73,7 +77,7 @@
                         </span>
                     </label>
 
-                    @if (temInteresse(produto.id)) {
+                    <ng-container *ngIf="temInteresse(produto.id)">
                         <label class="observacao-label" [for]="'observacao-' + produto.id">
                             Observação
                             <textarea
@@ -85,8 +89,8 @@
                                 placeholder="fale mais sobre seu interesse..."
                             ></textarea>
                         </label>
-                    }
-                }
+                    </ng-container>
+                </ng-container>
 
                 <div class="produto-acoes">
                     <button
@@ -97,7 +101,7 @@
                     >
                         {{ foiWishlist(produto.id) ? 'Remover da wishlist' : 'Wishlist' }}
                     </button>
-                    @if (foiFavorito(produto.id)) {
+                    <ng-container *ngIf="foiFavorito(produto.id); else favoritoOff">
                         <button
                             class="favorito-detalhe favorito-adicionado"
                             type="button"
@@ -106,7 +110,8 @@
                         >
                             Retirar dos favoritos
                         </button>
-                    } @else {
+                    </ng-container>
+                    <ng-template #favoritoOff>
                         <button
                             class="favorito-detalhe"
                             type="button"
@@ -115,7 +120,7 @@
                         >
                             Favorito
                         </button>
-                    }
+                    </ng-template>
                 </div>
             </div>
         </article>
