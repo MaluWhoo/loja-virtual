@@ -24,6 +24,9 @@
                     {{ categoria }}
                 </option>
             </select>
+			<a class="ver-carrinho" routerLink="/carrinho">
+                Ver carrinho ({{ quantidadeCarrinho() }})
+			</a>
         </div>
     </header>
 
@@ -51,9 +54,6 @@
                 <h2>{{ produto.title }}</h2>
                 <p class="preco">{{ produto.price | currency:'BRL' }}</p>
 
-                <a class="ver-carrinho" routerLink="/carrinho">
-                    Ver carrinho ({{ quantidadeCarrinho() }})
-                </a>
 
                 <label class="prioridade-label" [for]="'prioridade-' + produto.id">
                     Prioridade
