@@ -22,9 +22,9 @@ export class ProdutoService {
     //     return this.http.get<any>('https://fakestoreapi.com/products');
     // }
 
-    buscarProdutoPorId(id: number) {
-        return this.http.get<any>(`https://fakestoreapi.com/products/${id}`);
-    }
+    // buscarProdutoPorId(id: number) {
+    //     return this.http.get<any>(`https://fakestoreapi.com/products/${id}`);
+    // }
 
     obterEstoque(): { [id: number]: number } {
         if (isPlatformBrowser(this.platformId)) {
@@ -55,6 +55,7 @@ export class ProdutoService {
             );
         }
     }
+
     getById(id: string) {
         return this.http.get<any>(`${this.URL_STORE}/products/${id}`).pipe(
             timeout(10000),
