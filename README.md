@@ -6,7 +6,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
-[![Status](https://img.shields.io/badge/Status-Em_desenvolvimento-yellow?style=for-the-badge)]()
+[![Status](https://img.shields.io/badge/Status-Concluído-success?style=for-the-badge)]()
 </div>
 
 Desenvolver um projeto utilizando os seguintes conceitos: componentes, databinding, serviços, consumo de API, rotas e formulários com validação.
@@ -43,13 +43,13 @@ Este projeto tem como objetivo principal consolidar os fundamentos do desenvolvi
 
 Abaixo está o acompanhamento do status de desenvolvimento de cada módulo do nosso e-commerce:
 
-- [ ] **Catálogo de produtos favoritos:** Seção dedicada para marcar e visualizar itens favoritos, acompanhados de anotações personalizadas.
-- [ ] **Comparador de preços:** Ferramenta com filtro por categorias reais da API e o espaço analítico "vale a pena?".
-- [ ] **Painel de estoque fictício:** Gestão simulada de inventário com controle e reposição de estoque em tempo real.
-- [ ] **Lista de desejos (Wishlist):** Funcionalidade com adição manual de itens e definição de prioridades validadas por `Validators`.
+- [x] **Catálogo de produtos favoritos:** Seção dedicada para marcar e visualizar itens favoritos, acompanhados de anotações personalizadas.
+- [x] **Comparador de preços:** Ferramenta com filtro por categorias reais da API e o espaço analítico "vale a pena?".
+- [x] **Painel de estoque fictício:** Gestão simulada de inventário com controle e reposição de estoque em tempo real.
+- [x] **Lista de desejos (Wishlist):** Funcionalidade com adição manual de itens e definição de prioridades validadas por `Validators`.
 - [ ] **Mini e-commerce / Carrinho simples:** Carrinho gerenciado por serviço global e formulário de finalização de pedido totalmente validado.
-- [ ] **Avaliador de produtos:** Sistema interativo de avaliação por notas (1 a 5 estrelas) e campo de comentários.
-- [ ] **Catálogo por categorias e "Tenho interesse":** Listagem categorizada com a opção de registrar interesse no produto acompanhado de observações.
+- [x] **Avaliador de produtos:** Sistema interativo de avaliação por notas (1 a 5 estrelas) e campo de comentários.
+- [x] **Catálogo por categorias e "Tenho interesse":** Listagem categorizada com a opção de registrar interesse no produto acompanhado de observações.
 
 ---
 
