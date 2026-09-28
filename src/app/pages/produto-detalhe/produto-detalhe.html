@@ -3,13 +3,14 @@
 	<h2>{{ produto.title }}</h2>
 	<p>{{ produto.description }}</p>
 	<p>Preço: {{ produto.price }}</p>
+	<p>Categoria: {{ produto.category }}</p>
 	<a routerLink="/">Voltar para a lista de produtos</a>
 </div>
 
 <ng-template #notFound>
-	<div *ngIf="produtoNaoEncontrado">
-		<h2>Page not found</h2>
-		<p>O produto que você procura não existe.</p>
+	<div>
+		<h2>Não foi possível carregar o produto</h2>
+		<p>Tente novamente em alguns instantes.</p>
 		<a routerLink="/">Voltar para a lista de produtos</a>
 	</div>
 </ng-template>
