@@ -18,14 +18,6 @@ export class ProdutoService {
     private chaveEstoque = 'estoque';
     produtos: any[] = [];
 
-    // listarProdutos() {
-    //     return this.http.get<any>('https://fakestoreapi.com/products');
-    // }
-
-    // buscarProdutoPorId(id: number) {
-    //     return this.http.get<any>(`https://fakestoreapi.com/products/${id}`);
-    // }
-
     obterEstoque(): { [id: number]: number } {
         if (isPlatformBrowser(this.platformId)) {
             const estoque = localStorage.getItem(this.chaveEstoque);
