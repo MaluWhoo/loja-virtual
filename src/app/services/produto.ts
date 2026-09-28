@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Injectable, Service } from '@angular/core';
+import { Service } from '@angular/core';
 import { retry, timeout } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProdutoService {
-	URL_STORE = 'https://fakestoreapi.com/';
+    URL_STORE = 'https://fakestoreapi.com/';
+
     // Abrindo a porta o HttpClient
     constructor(private http: HttpClient,) { }
 
@@ -17,9 +18,9 @@ export class ProdutoService {
     private chaveEstoque = 'estoque';
     produtos: any[] = [];
 
-    listarProdutos() {
-        return this.http.get<any>('https://fakestoreapi.com/products');
-    }
+    // listarProdutos() {
+    //     return this.http.get<any>('https://fakestoreapi.com/products');
+    // }
 
     buscarProdutoPorId(id: number) {
         return this.http.get<any>(`https://fakestoreapi.com/products/${id}`);
@@ -54,12 +55,12 @@ export class ProdutoService {
             );
         }
     }
-        getById(id: string) {
-            return this.http.get<any>(`${this.URL_STORE}/products/${id}`).pipe(
-                timeout(10000),
-                retry({ count: 2, delay: 1000 })
-            );
-        }
+    getById(id: string) {
+        return this.http.get<any>(`${this.URL_STORE}/products/${id}`).pipe(
+            timeout(10000),
+            retry({ count: 2, delay: 1000 })
+        );
+    }
 
     listarProdutos() {
         return this.http.get<any[]>(`${this.URL_STORE}/products`).pipe(
@@ -68,7 +69,7 @@ export class ProdutoService {
         );
     }
 
-	listarProdutoPorId(id: number) {
+    listarProdutoPorId(id: number) {
         return this.http.get<any>(`${this.URL_STORE}/products/${id}`);
-	}
+    }
 }
