@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ProdutoService } from '../../services/produto';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+
+type FeedbackType = { tipo: 'sucesso' | 'erro'; mensagem: string } | null;
 
 @Component({
   imports: [CommonModule, ReactiveFormsModule],
@@ -14,10 +16,13 @@ export class Estoque {
   constructor(public ProdutoService: ProdutoService) { }
 
   reposicaoEnviada = false;
-  produtos: any[] = [];
+  produtos = signal<any[]>([]);
+  erro = signal(false);
+  feedback: FeedbackType = null;
+  
 
   formItem = new FormGroup({
-    id: new FormControl(null, [Validators.required, Validators.min(1)]),
+    id: new FormControl(null, [Validators.required, Validators.min(1), this.validarId.bind(this)]),
     quantidade: new FormControl(1, [Validators.required, Validators.min(1)]),
   });
 
@@ -25,18 +30,20 @@ export class Estoque {
     const idDigitado = Number(control.value);
     if (!idDigitado) return null;
 
-    const existe = this.produtos.some(i => i.id === idDigitado);
+    const existe = this.produtos().some((i: any) => i.id === idDigitado);
     return existe ? null : { idNaoEncontrado: true };
   }
 
   ngOnInit(): void {
     this.ProdutoService.listarProdutos().subscribe({
       next: (data) => {
-        this.produtos = data,
-          this.formItem.get('id')?.addValidators(this.validarId.bind(this));
+        this.produtos.set(Array.isArray(data) ? data : []);
         this.formItem.get('id')?.updateValueAndValidity();
       },
-      error: (error) => console.error('Erro:', error),
+      error: (error) => {
+        console.error('Erro ao carregar produtos:', error);
+        this.erro.set(true);
+      },
     });
   }
 
@@ -45,21 +52,32 @@ export class Estoque {
       const id = this.formItem.value.id!;
       const quantidade = this.formItem.value.quantidade!;
 
+      const produto = this.produtos().find((p: any) => p.id === id);
+      const tituloProduto = produto ? produto.title : `ID ${id}`;
+
       this.ProdutoService.adicionarEstoque(id, quantidade);
       this.reposicaoEnviada = true;
-      console.log(`Adicionadas ${quantidade} unidades ao produto ${id}`);
+      // console.log(`Adicionadas ${quantidade} unidades ao produto ${id}`);
 
       this.formItem.reset({
         id: null,
         quantidade: 1,
       });
 
-      setTimeout(() => {
-        this.reposicaoEnviada = false;
-      }, 4000);
+      this.feedback = {
+        tipo: 'sucesso',
+        mensagem: `${quantidade} unidade(s) adicionadas ao produto "${tituloProduto}" com sucesso.`,
+      };
 
     } else {
-      console.log('ID inválido ou produto não existe na base de dados.');
+      this.feedback = {
+        tipo: 'erro',
+        mensagem: 'ID inválido ou produto não existe na base de dados.',
+      };
     }
+  }
+
+  fecharFeedback(): void {
+    this.feedback = null;
   }
 }
