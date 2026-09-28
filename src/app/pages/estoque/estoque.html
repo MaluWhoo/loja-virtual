@@ -17,14 +17,14 @@
     <button type="submit" [disabled]="!formItem.valid">+ Adicionar</button>
 </form>
 
-@if (reposicaoEnviada) {
-    <div class="msg-confirmacao">
-        <p>Estoque enviado! Foi adicionado ao produto.</p> 
-    </div>
-} 
+<div class="msg-confirmacao" *ngIf="reposicaoEnviada">
+    <p>Estoque enviado! Foi adicionado ao produto.</p> 
+</div>
 
-@if (formItem.get('id')?.hasError('idNaoEncontrado')){
-    <div class="mgs-erro">
-        <p>Este ID não está cadastrado.</p>
-    </div>
-}
+<div class="msg-confirmacao" *ngIf="reposicaoEnviada">
+    <p>Estoque enviado! Foi adicionado ao produto.</p> 
+</div>
+
+<div class="mgs-erro" *ngIf="formItem.get('id')?.hasError('idNaoEncontrado')">
+    <p>Este ID não está cadastrado.</p>
+</div>
