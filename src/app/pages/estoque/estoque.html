@@ -1,6 +1,6 @@
 <h2>Produtos em estoque</h2>
 
-<div class="produto" *ngFor="let produto of produtos">
+<div class="produto" *ngFor="let produto of produtos()">
     <div class="produto-title">
         <p>ID: {{produto.id}}</p>
         <p>Produto: {{produto.title}}</p>
@@ -16,10 +16,6 @@
     <input type="number" formControlName="quantidade" placeholder="Quantidade">
     <button type="submit" [disabled]="!formItem.valid">+ Adicionar</button>
 </form>
-
-<div class="msg-confirmacao" *ngIf="reposicaoEnviada">
-    <p>Estoque enviado! Foi adicionado ao produto.</p> 
-</div>
 
 <div class="msg-confirmacao" *ngIf="reposicaoEnviada">
     <p>Estoque enviado! Foi adicionado ao produto.</p> 

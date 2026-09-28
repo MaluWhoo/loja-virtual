@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ProdutoService } from '../../services/produto';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 
@@ -14,10 +14,11 @@ export class Estoque {
   constructor(public ProdutoService: ProdutoService) { }
 
   reposicaoEnviada = false;
-  produtos: any[] = [];
+  produtos = signal<any[]>([]);
+  erro = signal(false);
 
   formItem = new FormGroup({
-    id: new FormControl(null, [Validators.required, Validators.min(1)]),
+    id: new FormControl(null, [Validators.required, Validators.min(1), this.validarId.bind(this)]),
     quantidade: new FormControl(1, [Validators.required, Validators.min(1)]),
   });
 
@@ -25,18 +26,20 @@ export class Estoque {
     const idDigitado = Number(control.value);
     if (!idDigitado) return null;
 
-    const existe = this.produtos.some(i => i.id === idDigitado);
+    const existe = this.produtos().some((i: any) => i.id === idDigitado);
     return existe ? null : { idNaoEncontrado: true };
   }
 
   ngOnInit(): void {
     this.ProdutoService.listarProdutos().subscribe({
       next: (data) => {
-        this.produtos = data,
-          this.formItem.get('id')?.addValidators(this.validarId.bind(this));
+        this.produtos.set(Array.isArray(data) ? data : []);
         this.formItem.get('id')?.updateValueAndValidity();
       },
-      error: (error) => console.error('Erro:', error),
+      error: (error) => {
+        console.error('Erro ao carregar produtos:', error);
+        this.erro.set(true);
+      },
     });
   }
 
