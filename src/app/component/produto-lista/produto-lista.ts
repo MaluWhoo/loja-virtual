@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -12,7 +12,7 @@ import { CarrinhoService } from '../../services/carrinho';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, MatButtonModule, MatBadgeModule, MatCardModule, MatIconModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink, MatButtonModule, MatBadgeModule, MatCardModule, MatIconModule],
   selector: 'app-produto-lista',
   styleUrl: './produto-lista.css',
   templateUrl: './produto-lista.html',
@@ -39,7 +39,7 @@ export class ProdutoLista implements OnInit {
   ];
 
   constructor(
-    private produtoService: ProdutoService,
+    public produtoService: ProdutoService,
     private favoritosService: FavoritosService,
     private carrinhoService: CarrinhoService,
     private router: Router,
@@ -81,7 +81,7 @@ export class ProdutoLista implements OnInit {
           .map((favorito) => favorito.produto!.id)
       );
 
-      this.produtoService.listarProdutor().subscribe({
+      this.produtoService.listarProdutos().subscribe({
         next: (data) => {
           this.produtos.set(Array.isArray(data) ? data : []);
           this.carregando.set(false);
@@ -231,6 +231,6 @@ export class ProdutoLista implements OnInit {
   }
 
   quantidadePorProduto(produtoId: number): number {
-	return this.carrinhoService.quantidadePorProduto(produtoId);
+    return this.carrinhoService.quantidadePorProduto(produtoId);
   }
 }

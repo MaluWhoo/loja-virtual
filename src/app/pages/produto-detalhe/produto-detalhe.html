@@ -1,0 +1,16 @@
+<div *ngIf="produto; else notFound">
+	<img [src]="produto.image" alt="{{ produto.title }}" width="150" />
+	<h2>{{ produto.title }}</h2>
+	<p>{{ produto.description }}</p>
+	<p>Preço: {{ produto.price }}</p>
+	<p>Categoria: {{ produto.category }}</p>
+	<a routerLink="/">Voltar para a lista de produtos</a>
+</div>
+
+<ng-template #notFound>
+	<div>
+		<h2>Não foi possível carregar o produto</h2>
+		<p>Tente novamente em alguns instantes.</p>
+		<a routerLink="/">Voltar para a lista de produtos</a>
+	</div>
+</ng-template>
