@@ -8,7 +8,7 @@ import { retry, timeout } from 'rxjs';
     providedIn: 'root'
 })
 export class ProdutoService {
-    URL_STORE = 'https://api.escuelajs.co/api/v1';
+    URL_STORE = 'https://fakestoreapi.com/';
 
     // Abrindo a porta o HttpClient
     constructor(private http: HttpClient,) { }
