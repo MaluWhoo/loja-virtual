@@ -3,6 +3,8 @@ import { Component, signal } from '@angular/core';
 import { ProdutoService } from '../../services/produto';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 
+type FeedbackType = { tipo: 'sucesso' | 'erro'; mensagem: string } | null;
+
 @Component({
   imports: [CommonModule, ReactiveFormsModule],
   selector: 'app-estoque',
@@ -16,6 +18,8 @@ export class Estoque {
   reposicaoEnviada = false;
   produtos = signal<any[]>([]);
   erro = signal(false);
+  feedback: FeedbackType = null;
+  
 
   formItem = new FormGroup({
     id: new FormControl(null, [Validators.required, Validators.min(1), this.validarId.bind(this)]),
@@ -48,21 +52,32 @@ export class Estoque {
       const id = this.formItem.value.id!;
       const quantidade = this.formItem.value.quantidade!;
 
+      const produto = this.produtos().find((p: any) => p.id === id);
+      const tituloProduto = produto ? produto.title : `ID ${id}`;
+
       this.ProdutoService.adicionarEstoque(id, quantidade);
       this.reposicaoEnviada = true;
-      console.log(`Adicionadas ${quantidade} unidades ao produto ${id}`);
+      // console.log(`Adicionadas ${quantidade} unidades ao produto ${id}`);
 
       this.formItem.reset({
         id: null,
         quantidade: 1,
       });
 
-      setTimeout(() => {
-        this.reposicaoEnviada = false;
-      }, 4000);
+      this.feedback = {
+        tipo: 'sucesso',
+        mensagem: `${quantidade} unidade(s) adicionadas ao produto "${tituloProduto}" com sucesso.`,
+      };
 
     } else {
-      console.log('ID inválido ou produto não existe na base de dados.');
+      this.feedback = {
+        tipo: 'erro',
+        mensagem: 'ID inválido ou produto não existe na base de dados.',
+      };
     }
+  }
+
+  fecharFeedback(): void {
+    this.feedback = null;
   }
 }
