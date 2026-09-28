@@ -77,7 +77,7 @@ export class ProdutoLista implements OnInit {
           .map((favorito) => favorito.produto!.id)
       );
 
-      this.produtoService.listarProdutor().subscribe({
+      this.produtoService.listarProdutos().subscribe({
         next: (data) => {
           this.produtos.set(Array.isArray(data) ? data : []);
           this.carregando.set(false);

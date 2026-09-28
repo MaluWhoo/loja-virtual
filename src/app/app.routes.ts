@@ -3,6 +3,7 @@ import { ProdutoLista } from './component/produto-lista/produto-lista';
 import { Carrinho } from './component/carrinho/carrinho';
 import { FavoritosLista } from './features/favoritos/favoritos-lista/favoritos-lista';
 import { FavoritosDetalheComponent } from './features/favoritos/favoritos-detalhe/favoritos-detalhe';
+import { ProdutoDetalhe } from './pages/produto-detalhe/produto-detalhe';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,9 @@ export const routes: Routes = [
     path: '',
     component: ProdutoLista,
     pathMatch: 'full'
+  },
+  { path: 'produto/:id', 
+	component: ProdutoDetalhe 
   }
 ];
 
