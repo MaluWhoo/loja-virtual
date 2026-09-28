@@ -166,22 +166,6 @@ select {
 	font-size: 0.75rem;
 }
 
-.avaliacao {
-	display: flex;
-	align-items: center;
-	gap: 5px;
-	margin: 0;
-	font-size: 0.9rem;
-}
-
-.estrela {
-	color: #d9d4d8;
-}
-
-.estrela-ativa {
-	color: #f28c00;
-}
-
 .nota,
 .quantidade-avaliacoes {
 	color: #625b63;

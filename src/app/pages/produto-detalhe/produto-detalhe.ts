@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProdutoService } from '../../services/produto';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -10,8 +10,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   templateUrl: './produto-detalhe.html',
 })
 export class ProdutoDetalhe {
-	produto: any= null;
-	produtoNaoEncontrado = false;
+	produto = signal<any | null>(null);
+	produtoNaoEncontrado = signal(false);
 
 	constructor(private route: ActivatedRoute, private produtoService: ProdutoService) {
 
@@ -22,12 +22,12 @@ export class ProdutoDetalhe {
 		if (id) {
 			this.produtoService.getById(id).subscribe({
 				next: (data) => {
-					this.produto = data;
-					this.produtoNaoEncontrado = !data;
+					this.produto.set(data);
+					this.produtoNaoEncontrado.set(!data);
 				},
 				error: (error) => {
 					console.error('Erro:', error);
-					this.produtoNaoEncontrado = true;
+					this.produtoNaoEncontrado.set(true);
 				},
 			});
 		}

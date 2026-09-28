@@ -1,7 +1,7 @@
 <main class="produto-detalhe">
 	<a class="voltar" routerLink="/">← Página inicial</a>
 
-	<ng-container *ngIf="produto as produtoAtual; else semProduto">
+	<ng-container *ngIf="produto() as produtoAtual; else semProduto">
 		<section class="produto-resumo">
 			<img [src]="produtoAtual.image" [alt]="produtoAtual.title" />
 			<div>
@@ -21,7 +21,7 @@
 
 <ng-template #semProduto>
 	<section class="estado-produto">
-		<ng-container *ngIf="produtoNaoEncontrado">
+		<ng-container *ngIf="produtoNaoEncontrado()">
 			<h1>Não foi possível carregar o produto</h1>
 			<p>Tente novamente em alguns instantes.</p>
 		</ng-container>
