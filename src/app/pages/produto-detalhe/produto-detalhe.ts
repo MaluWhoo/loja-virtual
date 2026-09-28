@@ -20,7 +20,7 @@ export class ProdutoDetalhe {
 	ngOnInit(): void {
 		const id = this.route.snapshot.paramMap.get('id');
 		if (id) {
-			this.produtoService.listarProdutoPorId(Number(id)).subscribe({
+			this.produtoService.getById(id).subscribe({
 				next: (data) => {
 					this.produto = data;
 					this.produtoNaoEncontrado = !data;

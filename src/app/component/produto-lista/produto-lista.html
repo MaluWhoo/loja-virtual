@@ -55,9 +55,9 @@
 
     <div class="grade-produtos" *ngIf="!carregando() && !erro()">
         <mat-card class="produto-card" *ngFor="let produto of produtosFiltrados">
-            <div class="produto-imagem">
+            <a class="produto-imagem" [routerLink]="['/produto', produto.id]" [attr.aria-label]="'Ver detalhes de ' + produto.title">
                 <img [src]="produto.image" [alt]="produto.title" />
-            </div>
+            </a>
             <div class="produto-conteudo">
                 <p class="categoria">{{ produto.category }}</p>
                 <h2>{{ produto.title }}</h2>

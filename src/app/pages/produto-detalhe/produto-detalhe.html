@@ -1,16 +1,29 @@
-<div *ngIf="produto; else notFound">
-	<img [src]="produto.image" alt="{{ produto.title }}" width="150" />
-	<h2>{{ produto.title }}</h2>
-	<p>{{ produto.description }}</p>
-	<p>Preço: {{ produto.price }}</p>
-	<p>Categoria: {{ produto.category }}</p>
-	<a routerLink="/">Voltar para a lista de produtos</a>
-</div>
+<main class="produto-detalhe">
+	<a class="voltar" routerLink="/">← Página inicial</a>
 
-<ng-template #notFound>
-	<div>
-		<h2>Não foi possível carregar o produto</h2>
-		<p>Tente novamente em alguns instantes.</p>
-		<a routerLink="/">Voltar para a lista de produtos</a>
-	</div>
+	<ng-container *ngIf="produto as produtoAtual; else semProduto">
+		<section class="produto-resumo">
+			<img [src]="produtoAtual.image" [alt]="produtoAtual.title" />
+			<div>
+				<p class="eyebrow">Detalhes do produto</p>
+				<h1>{{ produtoAtual.title }}</h1>
+				<p class="preco">{{ produtoAtual.price | currency:'BRL' }}</p>
+			</div>
+		</section>
+
+		<section class="produto-informacoes">
+			<h2>Descrição</h2>
+			<p>{{ produtoAtual.description }}</p>
+			<p class="categoria"><strong>Categoria:</strong> {{ produtoAtual.category }}</p>
+		</section>
+	</ng-container>
+</main>
+
+<ng-template #semProduto>
+	<section class="estado-produto">
+		<ng-container *ngIf="produtoNaoEncontrado">
+			<h1>Não foi possível carregar o produto</h1>
+			<p>Tente novamente em alguns instantes.</p>
+		</ng-container>
+	</section>
 </ng-template>

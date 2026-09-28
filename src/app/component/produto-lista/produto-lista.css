@@ -118,9 +118,11 @@ select {
 }
 
 .produto-imagem {
+	display: block;
 	position: relative;
 	height: 240px;
 	background: #f3f1f1;
+	text-decoration: none;
 }
 
 .produto-imagem img {
