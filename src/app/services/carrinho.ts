@@ -42,6 +42,16 @@ export class CarrinhoService {
     this.salvarCarrinho();
   }
 
+  atualizarQuantidade(index: number, quantidade: number) {
+    const quantidadeValida = Math.max(1, Math.floor(quantidade));
+    this.produtos.update((lista) =>
+      lista.map((produto, itemIndex) =>
+        itemIndex === index ? { ...produto, quantidade: quantidadeValida } : produto
+      )
+    );
+    this.salvarCarrinho();
+  }
+
   limparCarrinho() {
     this.produtos.set([]);
     this.salvarCarrinho();

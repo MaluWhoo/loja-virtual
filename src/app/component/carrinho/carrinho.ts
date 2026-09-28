@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { CarrinhoService } from '../../services/carrinho';
 
 @Component({
   selector: 'app-carrinho',
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonModule, MatCardModule, MatIconModule],
   templateUrl: './carrinho.html',
   styleUrl: './carrinho.css',
 })
@@ -18,6 +21,11 @@ export class Carrinho {
 
   removerProduto(index: number) {
     this.carrinhoService.removerProduto(index);
+    this.produtos = this.carrinhoService.listarProdutos();
+  }
+
+  atualizarQuantidade(index: number, quantidade: number) {
+    this.carrinhoService.atualizarQuantidade(index, quantidade);
     this.produtos = this.carrinhoService.listarProdutos();
   }
 

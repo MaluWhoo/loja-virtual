@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProdutoService } from '../../services/produto';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-	imports: [CommonModule, RouterLink],
+	imports: [CommonModule, RouterLink, MatButtonModule],
   selector: 'app-produto-detalhe',
   styleUrl: './produto-detalhe.css',
   templateUrl: './produto-detalhe.html',
 })
 export class ProdutoDetalhe {
-	produto: any= null;
-	produtoNaoEncontrado = false;
+	produto = signal<any | null>(null);
+	produtoNaoEncontrado = signal(false);
 
 	constructor(private route: ActivatedRoute, private produtoService: ProdutoService) {
 
@@ -20,14 +21,14 @@ export class ProdutoDetalhe {
 	ngOnInit(): void {
 		const id = this.route.snapshot.paramMap.get('id');
 		if (id) {
-			this.produtoService.listarProdutoPorId(Number(id)).subscribe({
+			this.produtoService.getById(id).subscribe({
 				next: (data) => {
-					this.produto = data;
-					this.produtoNaoEncontrado = !data;
+					this.produto.set(data);
+					this.produtoNaoEncontrado.set(!data);
 				},
 				error: (error) => {
 					console.error('Erro:', error);
-					this.produtoNaoEncontrado = true;
+					this.produtoNaoEncontrado.set(true);
 				},
 			});
 		}
