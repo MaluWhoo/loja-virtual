@@ -43,9 +43,9 @@ Este projeto tem como objetivo principal consolidar os fundamentos do desenvolvi
 
 Abaixo está o acompanhamento do status de desenvolvimento de cada módulo do nosso e-commerce:
 
-- [x] **Catálogo de produtos favoritos:** Seção dedicada para marcar e visualizar itens favoritos, acompanhados de anotações personalizadas.
-- [x] **Comparador de preços:** Ferramenta com filtro por categorias reais da API e o espaço analítico "vale a pena?".
-- [x] **Painel de estoque fictício:** Gestão simulada de inventário com controle e reposição de estoque em tempo real.
+- [ ] **Catálogo de produtos favoritos:** Seção dedicada para marcar e visualizar itens favoritos, acompanhados de anotações personalizadas.
+- [ ] **Comparador de preços:** Ferramenta com filtro por categorias reais da API e o espaço analítico "vale a pena?".
+- [ ] **Painel de estoque fictício:** Gestão simulada de inventário com controle e reposição de estoque em tempo real.
 - [ ] **Lista de desejos (Wishlist):** Funcionalidade com adição manual de itens e definição de prioridades validadas por `Validators`.
 - [ ] **Mini e-commerce / Carrinho simples:** Carrinho gerenciado por serviço global e formulário de finalização de pedido totalmente validado.
 - [ ] **Avaliador de produtos:** Sistema interativo de avaliação por notas (1 a 5 estrelas) e campo de comentários.
