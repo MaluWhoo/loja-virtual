@@ -1,50 +1,383 @@
+.pagina-estoque {
+    width: min(100% - 40px, 1080px);
+    margin: 0 auto;
+    padding: 36px 0 48px;
+    color: #242124;
+}
+
+.cabecalho-estoque {
+    margin-bottom: 28px;
+}
+
+.sobretitulo {
+    margin: 0 0 4px;
+    color: #6750a4;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.cabecalho-estoque h1,
+.cabecalho-reposicao h2 {
+    margin: 0;
+    font-weight: 500;
+}
+
+.cabecalho-estoque h1 {
+    font-size: 1.75rem;
+}
+
+.descricao-estoque {
+    margin: 8px 0 0;
+    color: #625b63;
+    font-size: 0.95rem;
+}
+
+.secao-produtos h2 {
+    margin: 0 0 14px;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.lista-produtos {
+    display: grid;
+    gap: 12px;
+}
+
 .produto {
     display: flex;
-    gap: 8px;
-    background-color: rgb(248, 246, 246);
-    padding: 6px;
-    border-radius: 5px;
-    margin: 10px 0px;
+    align-items: center;
     justify-content: space-between;
+    gap: 20px;
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid #e8e5e8;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 7px rgb(35 27 35 / 7%);
 }
 
 .produto-title {
     display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.produto-title p,
+.produto-identificacao p {
+    margin: 0;
+}
+
+.produto-id {
+    display: grid;
+    justify-items: center;
+    gap: 3px;
+    flex: 0 0 48px;
+    color: #625b63;
+    font-size: 0.75rem;
+}
+
+.produto-id strong {
+    color: #51445e;
+    font-size: 1rem;
+}
+
+.produto-identificacao {
+    min-width: 0;
+}
+
+.produto-identificacao h3 {
+    overflow-wrap: anywhere;
+    margin: 0 0 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.produto-identificacao p {
+    color: #625b63;
+    font-size: 0.85rem;
+}
+
+.quantidade-estoque {
+    display: grid;
     gap: 4px;
+    flex: 0 0 auto;
+    margin: 0;
+    text-align: right;
+}
+
+.quantidade-estoque span {
+    color: #625b63;
+    font-size: 0.8rem;
+}
+
+.quantidade-estoque strong {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.secao-reposicao {
+    margin-top: 28px;
+    padding: 20px;
+    border: 1px solid #e8e5e8;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 7px rgb(35 27 35 / 7%);
+}
+
+.cabecalho-reposicao {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.cabecalho-reposicao h2 {
+    font-size: 1.25rem;
+}
+
+.ajuda-reposicao {
+    margin: 0;
+    color: #625b63;
+    font-size: 0.85rem;
 }
 
 .forms-repor-estoque {
-    display: flex;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: minmax(120px, 0.7fr) minmax(180px, 1.2fr) minmax(140px, 0.7fr) minmax(190px, auto);
+    align-items: end;
+    gap: 12px;
+}
 
-    input {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-    }
+.forms-repor-estoque label {
+    grid-row: 1;
+    margin-bottom: -8px;
+    color: #51445e;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
 
-    button {
-        padding: 10px 14px;
-        border: none;
-        border-radius: 8px;
-        transition: 0.2s;
-        cursor: pointer;
+.forms-repor-estoque label[for="produto-id"] {
+    grid-column: 1 / 3;
+}
 
-        &:hover {
-            opacity: 0.5;
-        }
-    }
+.forms-repor-estoque label[for="quantidade-reposicao"] {
+    grid-column: 3;
+}
+
+.forms-repor-estoque input {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #fff;
+    color: #242124;
+    font: inherit;
+}
+
+.forms-repor-estoque input:focus {
+    border-color: #6750a4;
+    outline: 3px solid rgb(103 80 164 / 15%);
+}
+
+.forms-repor-estoque input[formControlName="id"] {
+    grid-column: 1 / 3;
+}
+
+.forms-repor-estoque input[formControlName="quantidade"] {
+    grid-column: 3;
+}
+
+.forms-repor-estoque button {
+    grid-column: 4;
+    min-height: 44px;
+    padding: 10px 18px;
+    border: 0;
+    border-radius: 24px;
+    background: #e9def8;
+    color: #211a24;
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.forms-repor-estoque button:hover:not(:disabled) {
+    background: #ddcff2;
+}
+
+.forms-repor-estoque button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.msg-confirmacao,
+.msg-erro {
+    margin-top: 16px;
+    padding: 10px 14px;
+    border-radius: 8px;
 }
 
 .msg-confirmacao {
-    background-color: #F1F7F3;
-    border: 1px solid #d0f3dc;
-    border-radius: 8px;
-    padding: 5px 15px;
+    border: 1px solid #cce8d4;
+    background: #f1f7f3;
+    color: #245c37;
 }
 
-.mgs-erro {
-    background-color: rgb(248, 235, 235);
-    border: 1px solid rgb(241, 199, 199);
-    border-radius: 8px;
-    padding: 5px 15px;
+.msg-erro {
+    border: 1px solid #f1c7c7;
+    background: #f8ebeb;
+    color: #8a3030;
+}
+
+.msg-confirmacao p,
+.msg-erro p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 720px) {
+    .pagina-estoque {
+        width: min(100% - 28px, 520px);
+        padding-top: 24px;
+    }
+
+    .produto {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .quantidade-estoque {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        text-align: left;
+    }
+
+    .cabecalho-reposicao {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .forms-repor-estoque {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+        align-items: end;
+        gap: 12px;
+    }
+
+    .campo-reposicao {
+        display: grid;
+        gap: 6px;
+        min-width: 0;
+    }
+
+    .campo-reposicao label {
+        color: #51445e;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .campo-reposicao input {
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 0;
+        min-height: 44px;
+        padding: 10px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #fff;
+        color: #242124;
+        font: inherit;
+    }
+
+    .campo-reposicao input:focus {
+        border-color: #6750a4;
+        outline: 3px solid rgb(103 80 164 / 15%);
+    }
+
+    .forms-repor-estoque {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+        align-items: end;
+        gap: 12px;
+    }
+
+    .campo-reposicao {
+        display: grid;
+        gap: 6px;
+        min-width: 0;
+    }
+
+    .campo-reposicao label {
+        color: #51445e;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .campo-reposicao input {
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 0;
+        min-height: 44px;
+        padding: 10px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #fff;
+        color: #242124;
+        font: inherit;
+    }
+
+    .campo-reposicao input:focus {
+        border-color: #6750a4;
+        outline: 3px solid rgb(103 80 164 / 15%);
+    }
+
+    .forms-repor-estoque button {
+        min-height: 44px;
+        padding: 10px 18px;
+        border: 0;
+        border-radius: 24px;
+        background: #e9def8;
+        color: #211a24;
+        font: inherit;
+        font-weight: 500;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: background-color 0.2s, opacity 0.2s;
+    }
+
+    .forms-repor-estoque button:hover:not(:disabled) {
+        background: #ddcff2;
+    }
+
+    .forms-repor-estoque button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+    }
+
+    @media (max-width: 640px) {
+        .forms-repor-estoque {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .forms-repor-estoque button {
+            grid-column: 1 / -1;
+        }
+    }
+
+    @media (max-width: 420px) {
+        .forms-repor-estoque {
+            grid-template-columns: 1fr;
+        }
+
+        .forms-repor-estoque button {
+            grid-column: 1;
+        }
+    }
 }

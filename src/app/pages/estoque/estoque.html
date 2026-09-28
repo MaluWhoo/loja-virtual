@@ -1,26 +1,68 @@
-<h2>Produtos em estoque</h2>
+<main class="pagina-estoque">
+    <header class="cabecalho-estoque">
+        <p class="sobretitulo">Controle de inventário</p>
+        <h1>Produtos em estoque</h1>
+        <p class="descricao-estoque">
+            Consulte as quantidades disponíveis e reponha o estoque por produto.
+        </p>
+    </header>
 
-<div class="produto" *ngFor="let produto of produtos()">
-    <div class="produto-title">
-        <p>ID: {{produto.id}}</p>
-        <p>Produto: {{produto.title}}</p>
-        <p>Preço Unitário: {{produto.price}}</p>
-    </div>
-    <p>Quantidade em Estoque: {{ ProdutoService.obterQuantidade(produto.id) }}</p>
-</div>
+    <section class="secao-produtos" aria-labelledby="titulo-produtos">
+        <h2 id="titulo-produtos">Produtos cadastrados</h2>
 
-<h2>Repor Estoque</h2>
+        <div class="lista-produtos">
+            <article class="produto" *ngFor="let produto of produtos()">
+                <div class="produto-title">
+                    <p class="produto-id">
+                        <span>ID</span>
+                        <strong>{{ produto.id }}</strong>
+                    </p>
 
-<form [formGroup]="formItem" (ngSubmit)="enviar()" class="forms-repor-estoque">
-    <input type="number" formControlName="id" placeholder="Digite o ID...">
-    <input type="number" formControlName="quantidade" placeholder="Quantidade">
-    <button type="submit" [disabled]="!formItem.valid">+ Adicionar</button>
-</form>
+                    <div class="produto-identificacao">
+                        <h3>{{ produto.title }}</h3>
+                        <p>Preço unitário: {{ produto.price | currency:'BRL' }}</p>
+                    </div>
+                </div>
 
-<div class="msg-confirmacao" *ngIf="reposicaoEnviada">
-    <p>Estoque enviado! Foi adicionado ao produto.</p> 
-</div>
+                <p class="quantidade-estoque">
+                    <span>Quantidade em estoque</span>
+                    <strong>{{ ProdutoService.obterQuantidade(produto.id) }}</strong>
+                </p>
+            </article>
+        </div>
+    </section>
 
-<div class="mgs-erro" *ngIf="formItem.get('id')?.hasError('idNaoEncontrado')">
-    <p>Este ID não está cadastrado.</p>
-</div>
+    <section class="secao-reposicao" aria-labelledby="titulo-reposicao">
+        <div class="cabecalho-reposicao">
+            <div>
+                <p class="sobretitulo">Atualização de inventário</p>
+                <h2 id="titulo-reposicao">Repor estoque</h2>
+            </div>
+            <p class="ajuda-reposicao">Informe o ID do produto e a quantidade a adicionar.</p>
+        </div>
+
+        <form [formGroup]="formItem" (ngSubmit)="enviar()" class="forms-repor-estoque">
+            <div class="campo-reposicao">
+                <label for="produto-id">ID do produto</label>
+                <input id="produto-id" type="number" formControlName="id" placeholder="Digite o ID..." />
+            </div>
+
+            <div class="campo-reposicao">
+                <label for="quantidade-reposicao">Quantidade</label>
+                <input id="quantidade-reposicao" type="number" formControlName="quantidade" placeholder="Ex.: 10" />
+            </div>
+
+            <button type="submit" [disabled]="!formItem.valid">
+                + Adicionar ao estoque
+            </button>
+        </form>
+
+        <div class="msg-confirmacao" *ngIf="reposicaoEnviada" role="status">
+            <p>Estoque enviado! Foi adicionado ao produto.</p>
+        </div>
+
+        <div class="msg-erro" *ngIf="formItem.get('id')?.hasError('idNaoEncontrado')" role="alert">
+            <p>Este ID não está cadastrado.</p>
+        </div>
+    </section>
+</main>
