@@ -7,12 +7,12 @@
 
         <div class="catalogo-acoes">
             <ng-container *ngIf="categoriaSelecionada">
-                <button class="voltar-inicio" type="button" (click)="voltarParaInicio()" aria-label="Voltar para a página inicial">
+                <button mat-button class="botao-header voltar-inicio" type="button" (click)="voltarParaInicio()" aria-label="Voltar para a página inicial">
                     ← Página inicial
                 </button>
             </ng-container>
-            <a class="wishlist" href="/favoritos">Wishlist</a>
-            <a class="favoritos-menu" href="/favoritos/todos">Favoritos</a>
+            <a mat-button class="botao-header wishlist" href="/favoritos">Wishlist</a>
+            <a mat-button class="botao-header favoritos-menu" href="/favoritos/todos">Favoritos</a>
             <label for="categoria">Filtrar por categoria</label>
             <select
                 id="categoria"
@@ -24,9 +24,18 @@
                     {{ categoria }}
                 </option>
             </select>
-			<a class="ver-carrinho" routerLink="/carrinho">
-                Ver carrinho ({{ quantidadeCarrinho() }})
-			</a>
+            <a
+                class="carrinho-icone"
+                mat-icon-button
+                routerLink="/carrinho"
+                [matBadge]="quantidadeCarrinho()"
+                [matBadgeHidden]="quantidadeCarrinho() === 0"
+                matBadgeColor="warn"
+                matBadgeMax="99"
+                [attr.aria-label]="'Carrinho com ' + quantidadeCarrinho() + ' itens'"
+            >
+                <mat-icon fontSet="material-symbols-outlined">shopping_cart</mat-icon>
+            </a>
         </div>
     </header>
 
@@ -45,7 +54,7 @@
     </ng-template>
 
     <div class="grade-produtos" *ngIf="!carregando() && !erro()">
-        <article class="produto-card" *ngFor="let produto of produtosFiltrados">
+        <mat-card class="produto-card" *ngFor="let produto of produtosFiltrados">
             <div class="produto-imagem">
                 <img [src]="produto.image" [alt]="produto.title" />
             </div>
@@ -53,8 +62,7 @@
                 <p class="categoria">{{ produto.category }}</p>
                 <h2>{{ produto.title }}</h2>
                 <p class="preco">{{ produto.price | currency:'BRL' }}</p>
-				<!-- exibe quantidade de itens no carrinho -->
-                <a routerLink="/carrinho">Carrinho ({{ quantidadePorProduto(produto.id) }})</a>
+                <a class="quantidade-carrinho" routerLink="/carrinho">Carrinho ({{ quantidadePorProduto(produto.id) }})</a>
 
                 <label class="prioridade-label" [for]="'prioridade-' + produto.id">
                     Prioridade
@@ -100,6 +108,7 @@
 
                 <div class="produto-acoes">
                     <button
+                        mat-button
                         class="favoritar"
                         type="button"
                         (click)="alternarWishlist(produto)"
@@ -109,6 +118,7 @@
                     </button>
                     <ng-container *ngIf="foiFavorito(produto.id); else favoritoOff">
                         <button
+                            mat-button
                             class="favorito-detalhe favorito-adicionado"
                             type="button"
                             (click)="removerFavorito(produto)"
@@ -119,6 +129,7 @@
                     </ng-container>
                     <ng-template #favoritoOff>
                         <button
+                            mat-button
                             class="favorito-detalhe"
                             type="button"
                             (click)="alternarFavorito(produto)"
@@ -129,14 +140,25 @@
                     </ng-template>
                 </div>
 
-                <button
-                    class="adicionar-carrinho"
-                    type="button"
-                    (click)="adicionarAoCarrinho(produto)"
-                >
-                    Adicionar ao carrinho
-                </button>
+                <div class="produto-acoes">
+                    <button
+                        mat-button
+                        class="detalhes-produto"
+                        type="button"
+                        (click)="abrirFormularioFavorito(produto)"
+                    >
+                        Ver detalhes
+                    </button>
+                    <button
+                        mat-flat-button
+                        class="adicionar-carrinho"
+                        type="button"
+                        (click)="adicionarAoCarrinho(produto)"
+                    >
+                        Adicionar
+                    </button>
+                </div>
             </div>
-        </article>
+        </mat-card>
     </div>
 </section>

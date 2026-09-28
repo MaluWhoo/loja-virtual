@@ -1,25 +1,75 @@
-<h2>Meu Carrinho</h2>
+<section class="pagina-carrinho">
+  <header class="cabecalho-carrinho">
+    <div>
+      <p class="sobretitulo">Sua seleção</p>
+      <h1>Meu carrinho</h1>
+    </div>
+    <p class="contagem-itens" *ngIf="produtos.length > 0">
+      {{ produtos.length }} {{ produtos.length === 1 ? 'produto' : 'produtos' }}
+    </p>
+  </header>
 
-<div *ngIf="produtos.length === 0">
-  <p>Seu carrinho está vazio.</p>
-</div>
+  <div class="carrinho-vazio" *ngIf="produtos.length === 0">
+    <mat-icon fontSet="material-symbols-outlined" aria-hidden="true">shopping_cart</mat-icon>
+    <p>Seu carrinho está vazio.</p>
+  </div>
 
-<div *ngFor="let produto of produtos; let i = index">
-  <p>{{ produto.title }}</p>
-  <p>Preço: $ {{ produto.price }}</p>
-  <p>Quantidade: {{ produto.quantidade ?? 1 }}</p>
+  <div class="lista-carrinho" *ngIf="produtos.length > 0">
+    <mat-card class="item-carrinho" *ngFor="let produto of produtos; let i = index">
+      <div class="imagem-produto">
+        <img [src]="produto.image" [alt]="produto.title" />
+      </div>
 
-  <button (click)="removerProduto(i)">
-    Remover
-  </button>
-</div>
+      <div class="titulo-produto">
+        <h2>{{ produto.title }}</h2>
+        <p class="preco-unitario">{{ produto.price | currency:'BRL' }} cada</p>
+      </div>
 
-<div *ngIf="produtos.length > 0">
+      <div class="quantidade-produto" [attr.aria-label]="'Quantidade: ' + (produto.quantidade ?? 1)">
+        <button
+          mat-icon-button
+          type="button"
+          (click)="atualizarQuantidade(i, (produto.quantidade ?? 1) - 1)"
+          [disabled]="(produto.quantidade ?? 1) <= 1"
+          [attr.aria-label]="'Diminuir quantidade de ' + produto.title"
+        >
+          <mat-icon fontSet="material-symbols-outlined">remove</mat-icon>
+        </button>
+        <span>{{ produto.quantidade ?? 1 }}</span>
+        <button
+          mat-icon-button
+          type="button"
+          (click)="atualizarQuantidade(i, (produto.quantidade ?? 1) + 1)"
+          [attr.aria-label]="'Aumentar quantidade de ' + produto.title"
+        >
+          <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+        </button>
+      </div>
 
-  <h3>Total: $ {{ calcularTotal() | number:'1.2-2' }}</h3>
+      <div class="total-produto">
+        <span>Total</span>
+        <strong>{{ produto.price * (produto.quantidade ?? 1) | currency:'BRL' }}</strong>
+      </div>
 
-  <button (click)="limparCarrinho()">
-    Limpar carrinho
-  </button>
+      <button
+        class="remover-produto"
+        mat-icon-button
+        type="button"
+        (click)="removerProduto(i)"
+        [attr.aria-label]="'Remover ' + produto.title + ' do carrinho'"
+      >
+        <mat-icon fontSet="material-symbols-outlined">delete_outline</mat-icon>
+      </button>
+    </mat-card>
+  </div>
 
-</div>
+  <footer class="resumo-carrinho" *ngIf="produtos.length > 0">
+    <div class="total-carrinho">
+      <span>Total do pedido</span>
+      <strong>{{ calcularTotal() | currency:'BRL' }}</strong>
+    </div>
+    <button mat-button type="button" (click)="limparCarrinho()">
+      Limpar carrinho
+    </button>
+  </footer>
+</section>
