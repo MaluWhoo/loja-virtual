@@ -145,10 +145,11 @@
                         mat-button
                         class="detalhes-produto"
                         type="button"
-                        (click)="abrirFormularioFavorito(produto)"
+						[routerLink]="['/produto', produto.id]"
+						[attr.aria-label]="'Ver detalhes de ' + produto.title"
                     >
                         Ver detalhes
-                    </button>
+					</button>
                     <button
                         mat-flat-button
                         class="adicionar-carrinho"

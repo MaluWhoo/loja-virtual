@@ -15,6 +15,7 @@
 			<h2>Descrição</h2>
 			<p>{{ produtoAtual.description }}</p>
 			<p class="categoria"><strong>Categoria:</strong> {{ produtoAtual.category }}</p>
+			<button mat-flat-button type="button" [routerLink]="'/favoritos/' + produtoAtual.id">Favoritar o produto</button>
 		</section>
 	</ng-container>
 </main>

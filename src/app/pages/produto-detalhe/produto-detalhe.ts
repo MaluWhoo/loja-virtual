@@ -2,9 +2,10 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProdutoService } from '../../services/produto';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-	imports: [CommonModule, RouterLink],
+	imports: [CommonModule, RouterLink, MatButtonModule],
   selector: 'app-produto-detalhe',
   styleUrl: './produto-detalhe.css',
   templateUrl: './produto-detalhe.html',
