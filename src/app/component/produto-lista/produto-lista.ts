@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProdutoService } from '../../services/produto';
 import { FavoritosService, Prioridade } from '../../services/favoritos';
@@ -8,7 +8,7 @@ import { CarrinhoService } from '../../services/carrinho';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
   selector: 'app-produto-lista',
   styleUrl: './produto-lista.css',
   templateUrl: './produto-lista.html',
@@ -35,7 +35,7 @@ export class ProdutoLista implements OnInit {
   ];
 
   constructor(
-    private produtoService: ProdutoService,
+    public produtoService: ProdutoService,
     private favoritosService: FavoritosService,
     private carrinhoService: CarrinhoService,
     private router: Router,
@@ -227,6 +227,6 @@ export class ProdutoLista implements OnInit {
   }
 
   quantidadePorProduto(produtoId: number): number {
-	return this.carrinhoService.quantidadePorProduto(produtoId);
+    return this.carrinhoService.quantidadePorProduto(produtoId);
   }
 }

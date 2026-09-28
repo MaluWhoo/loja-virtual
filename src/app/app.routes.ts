@@ -4,6 +4,7 @@ import { Carrinho } from './component/carrinho/carrinho';
 import { FavoritosLista } from './features/favoritos/favoritos-lista/favoritos-lista';
 import { FavoritosDetalheComponent } from './features/favoritos/favoritos-detalhe/favoritos-detalhe';
 import { ProdutoDetalhe } from './pages/produto-detalhe/produto-detalhe';
+import { Estoque } from './pages/estoque/estoque';
 
 export const routes: Routes = [
   {
@@ -28,16 +29,16 @@ export const routes: Routes = [
     component: Carrinho,
   },
   {
+    path: 'estoque',
+    component: Estoque
+  },
+  {
     path: '',
     component: ProdutoLista,
     pathMatch: 'full'
   },
-  { path: 'produto/:id', 
-	component: ProdutoDetalhe 
+  { 
+    path: 'produto/:id', 
+    component: ProdutoDetalhe 
   }
 ];
-
-
-
-
-
