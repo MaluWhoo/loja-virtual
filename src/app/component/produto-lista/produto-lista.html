@@ -53,7 +53,8 @@
                 <p class="categoria">{{ produto.category }}</p>
                 <h2>{{ produto.title }}</h2>
                 <p class="preco">{{ produto.price | currency:'BRL' }}</p>
-
+				<!-- exibe quantidade de itens no carrinho -->
+                <a routerLink="/carrinho">Carrinho ({{ quantidadePorProduto(produto.id) }})</a>
 
                 <label class="prioridade-label" [for]="'prioridade-' + produto.id">
                     Prioridade

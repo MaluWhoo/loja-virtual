@@ -225,4 +225,8 @@ export class ProdutoLista implements OnInit {
   quantidadeCarrinho(): number {
     return this.carrinhoService.quantidadeItens();
   }
+
+  quantidadePorProduto(produtoId: number): number {
+	return this.carrinhoService.quantidadePorProduto(produtoId);
+  }
 }

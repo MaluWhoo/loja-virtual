@@ -27,8 +27,9 @@ export class Carrinho {
   }
 
   calcularTotal() {
+	// Calcula o total do carrinho somando o preço de cada produto multiplicado pela quantidade
     return this.produtos.reduce(
-      (total, produto) => total + produto.price,
+      (total, produto) => total + produto.price * (produto.quantidade ?? 1),
       0
     );
   }
