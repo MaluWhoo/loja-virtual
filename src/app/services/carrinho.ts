@@ -13,7 +13,19 @@ export class CarrinhoService {
   }
 
   adicionarProduto(produto: any) {
-    this.produtos.update((lista) => [...lista, produto]);
+    this.produtos.update((lista) => {
+      const produtoExistente = lista.find((item) => item.id === produto.id && produto.id != null);
+
+      if (produtoExistente) {
+        return lista.map((item) =>
+          item === produtoExistente
+            ? { ...item, quantidade: (item.quantidade ?? 1) + 1 }
+            : item
+        );
+      }
+
+      return [...lista, { ...produto, quantidade: 1 }];
+    });
     this.salvarCarrinho();
   }
 
@@ -22,7 +34,7 @@ export class CarrinhoService {
   }
 
   quantidade(): number {
-    return this.produtos().length;
+    return this.quantidadeItens();
   }
 
   removerProduto(index: number) {
@@ -36,7 +48,12 @@ export class CarrinhoService {
   }
 
   quantidadeItens() {
-    return this.produtos().length;
+    return this.produtos().reduce((total, produto) => total + (produto.quantidade ?? 1), 0);
+  }
+
+  quantidadePorProduto(produtoId: number) {
+    const produto = this.produtos().find((item) => item.id === produtoId);
+    return produto ? (produto.quantidade ?? 1) : 0;
   }
 
   private salvarCarrinho() {
@@ -53,8 +70,25 @@ export class CarrinhoService {
       const carrinhoSalvo = localStorage.getItem(this.chaveCarrinho);
 
       if (carrinhoSalvo) {
-        this.produtos.set(JSON.parse(carrinhoSalvo));
+        this.produtos.set(this.agruparProdutos(JSON.parse(carrinhoSalvo)));
+        this.salvarCarrinho();
       }
     }
+  }
+
+  private agruparProdutos(produtos: any[]) {
+    return produtos.reduce((agrupados, produto) => {
+      const produtoExistente = agrupados.find(
+        (item: any) => item.id === produto.id && produto.id != null
+      );
+
+      if (produtoExistente) {
+        produtoExistente.quantidade += produto.quantidade ?? 1;
+      } else {
+        agrupados.push({ ...produto, quantidade: produto.quantidade ?? 1 });
+      }
+
+      return agrupados;
+    }, []);
   }
 }
